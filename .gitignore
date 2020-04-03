@@ -1,0 +1,5 @@
+__pycache__
+migrations
+node_modules
+venv
+*.pdf
