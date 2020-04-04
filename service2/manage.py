@@ -1,6 +1,6 @@
 from flask_script import Manager
 from flask_cors import CORS
-from app import app, db
+from app import app
 import requests
 
 # from flask_migrate import Migrate, MigrateCommand

@@ -18,7 +18,7 @@ def save_address():
 
     address = Address(street, city, province, user_id)
 
-    address.save()
+    address.save_address_to_db()
 
     return make_response(address.serialize(), 200)
 

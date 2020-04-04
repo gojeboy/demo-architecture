@@ -1,50 +1,57 @@
 import os
+import psycopg2
 
-postgres_db = "POSTGRES_DB"
-postgres_user = "POSTGRES_DB_USER"
-postgres_password = "POSTGRES_DB_PASSWORD"
-postgres_host = "POSTGRES_HOST"
-
-
-def get_role():
-
-    if postgres_user in os.environ:
-        return os.environ[postgres_user]
-    else:
-        return "admin"
+# postgres_db 
+# postgres_user 
+# postgres_password
+# postgres_host 
 
 
-def get_password():
-
-    if postgres_password in os.environ:
-        return os.environ[postgres_password]
-    else:
-        return "password"
+if "POSTGRES_DB_USER" in os.environ:
+    postgres_user = os.environ["POSTGRES_DB_USER"]
+else:
+        postgres_user= "admin"
 
 
-def get_db():
-    if postgres_db in os.environ:
-        return os.environ[postgres_db]
-    else:
-        return "test_db"
+if "POSTGRES_DB" in os.environ:
+    postgres_db = os.environ["POSTGRES_DB"]
+else:
+        postgres_db= "test_db"
+
+if "POSTGRES_DB_PASSWORD" in os.environ:
+    postgres_password = os.environ["POSTGRES_DB_PASSWORD"]
+else:
+        postgres_password= "password"
 
 
-def get_host():
-    if postgres_host in os.environ:
-        return os.environ[postgres_host]
-    else:
-        return "localhost"
+if "POSTGRES_HOST" in os.environ:
+    postgres_host = os.environ["POSTGRES_HOST"]
+else:
+        postgres_host= "localhost"
 
 
-def config_progress():
 
-    role = get_role()
-    password = get_password()
-    db = get_db()
-    host = get_host()
+class Config:
+   
+    def config_progress():
+        connection_str = (
+            "postgresql+psycopg2://" + role + ":" + password + "@" + host + "/" + db
+        )
 
-    connection_str = (
-        "postgresql+psycopg2://" + role + ":" + password + "@" + host + "/" + db
-    )
+        return connection_str
 
-    return connection_str
+    @staticmethod
+    def get_conn():
+        conn = psycopg2.connect(
+            "dbname="
+            + postgres_db
+            + " user="
+            + postgres_user
+            + " host="
+            + postgres_host
+            + " password="
+            + postgres_password
+            + ""
+        )
+
+        return conn
