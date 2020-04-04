@@ -43,6 +43,8 @@ services:
       - service2
       - db-manager
       - db
+    environment:
+      - ENV=test
     tty: true
 
     ports:
