@@ -1,16 +1,10 @@
-from app import db, app
+from app.db import DB
 
+db =DB()
 
-class User(db.Model):
-    __tablename__ = "tbl_user"
-
-    __table_args__ = {"extend_existing": True}
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200))
-    surname = db.Column(db.String(200))
-
-    # addresses = db.relationship("address")
+class User:
+    name = ''
+    surname = ''
 
     def __init__(self, name, surname):
 
@@ -18,13 +12,12 @@ class User(db.Model):
         self.surname = surname
 
     def save(self):
-        print(app.config)
-        db.session.add(self)
-        db.session.commit()
+        str_sql ="INSERT INTO tbl_user(name,surname) values('{}', '{}')".format(self.name, self.surname)
+        db.execute_sql(str_sql)
 
     @staticmethod
     def get_all_users():
         return db.session.query(User).all()
 
     def serialize(self):
-        return {"id": self.id, "name": self.name, "surname": self.surname}
+        return {"name": self.name, "surname": self.surname}
