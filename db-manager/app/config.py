@@ -6,47 +6,43 @@ postgres_password = "POSTGRES_DB_PASSWORD"
 postgres_host = "POSTGRES_HOST"
 
 
-def get_role():
+
     
-    if postgres_user in os.environ:
-        return os.environ[postgres_user]
-    else:
-        return "admin"
+if "POSTGRES_DB_USER" in os.environ:
+    postgres_user= os.environ["POSTGRES_DB_USER"]
+else:
+    postgres_user ="admin"
 
 
-def get_password():
-
-    if postgres_password in os.environ:
-        return os.environ[postgres_password]
-    else:
-        return "password"
 
 
-def get_db():
-    if postgres_db in os.environ:
-        return os.environ[postgres_db]
-    else:
-        return "test_db"
+if "POSTGRES_DB_PASSWORD" in os.environ:
+    postgres_password = os.environ["POSTGRES_DB_PASSWORD"]
+else:
+    postgres_password = "password"
 
 
-def get_host():
-    if postgres_host in os.environ:
-        return os.environ[postgres_host]
-    else:
-        return "localhost"
+
+if "POSTGRES_DB" in os.environ:
+    postgres_db= os.environ["POSTGRES_DB"]
+else:
+    postgres_db= "test_db"
 
 
-def config_progress():
 
-    role = get_role()
-    password = get_password()
-    db = get_db()
-    host = get_host()
+if "POSTGRES_HOST" in os.environ:
+    postgres_host= os.environ["POSTGRES_HOST"]
+else:
+    postgres_host= "localhost"
 
-    connection_str = (
-        "postgresql+psycopg2://" + role + ":" + password + "@" + host + "/" + db
-    )
 
-    print(connection_str)
-   
-    return connection_str
+class Config:
+
+
+    @staticmethod
+    def config_progress():
+
+        connection_str = "postgresql+psycopg2://" + postgres_user + ":" + postgres_password + "@" + postgres_host + "/" + postgres_db
+        
+    
+        return connection_str

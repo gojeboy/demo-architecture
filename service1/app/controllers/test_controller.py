@@ -11,29 +11,29 @@ def hello_world():
 
 @app.route("/user", methods=["POST"])
 def save_user():
-    data = request.json
-    print(data)
+    data = request.json 
     name = data["name"]
     surname = data["surname"]
+    email = data["email"]
 
-    user = User(name, surname)
+    user = User(name, surname, email)
 
     user.save()
 
-    return user.serialize(), 200
+    saved_user = User.get_user_by_email(email)
+
+    return jsonify(saved_user), 200
 
 
 @app.route("/users", methods=["GET"])
 def get_users():
     users = User.get_all_users()
-    response = []
-
-    for user in users:
-        response.append(user.serialize())
-
-    return jsonify(response), 200
+    return jsonify(users), 200
 
 
 @app.route("/user/<userid>", methods=["GET"])
 def get_user(userid):
-    return {"id": 1, "name": "Njabulo", "surname": "Nsibande"}, 200
+    print(userid)
+
+    user = User.get_user(userid)
+    return jsonify(user), 200

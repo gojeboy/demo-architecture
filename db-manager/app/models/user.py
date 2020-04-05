@@ -9,6 +9,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200))
     surname = db.Column(db.String(200))
+    email = db.Column(db.String(200), unique=True)
 
     children = db.relationship("address")
 
